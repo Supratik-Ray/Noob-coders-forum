@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -146,6 +147,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES['default'] = dj_database_url.parse("postgresql://my_blog_django_render_user:a0opsq1D2NdFRYjhCyc3huWvSZ2kNnH5@dpg-cutc1edsvqrc73e5ugcg-a/my_blog_django_render")
 
 
 MESSAGE_TAGS = {
