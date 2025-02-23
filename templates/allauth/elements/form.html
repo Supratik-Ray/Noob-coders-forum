@@ -1,0 +1,11 @@
+<!-- filepath: /c:/Users/raysu/OneDrive/Desktop/my_blog/my_blog/templates/allauth/elements/form.html -->
+{% load allauth %}
+<form method="{{ attrs.method }}" action="{{ attrs.action }}" novalidate class="w-100 mx-auto bg-dark rounded text-white p-5" style="max-width: 500px;">
+  {% csrf_token %}
+  {% slot body %}
+  {% endslot %}
+  <div class="mt-3">
+    {% slot actions %}
+    {% endslot %}
+  </div>
+</form>

@@ -1,0 +1,17 @@
+# Virtual environment
+.venv/
+
+# IDE settings
+.idea/
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Local database
+db.sqlite3
+
+# OS-specific files
+.DS_Store
+Thumbs.db

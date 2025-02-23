@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+  Homepage🏠
+{% endblock %}
+
+{% block content %}
+  <section class="p-5 bg-dark text-light">
+    <div class="container">
+      <div class="d-md-flex align-items-center justify-content-between">
+        <div class="text-center text-md-start">
+          <h1 class="fw-bold">Official forum for <span class="text-primary" style="white-space: nowrap;">noob coders</span></h1>
+          <p class="fs-5 my-md-4">Start creating post after logging in!</p>
+          <a class="btn btn-lg btn-primary me-3" href="{% url 'posts:create-post' %}">Create post</a>
+          <a class="btn btn-lg btn-secondary" href="{% url 'posts:post-list' %}">View posts</a>
+        </div>
+        <div class="w-50 d-none d-md-block">
+          <img class="img-fluid" src="{% static 'images/hero-image.svg' %}" alt="hero-image" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="p-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Objectives of this Forum</h2>
+      <div class="row g-4">
+        <div class="col-md">
+          <div class="card bg-dark text-light text-center p-5">
+            <div class="h1 mb3">
+              <i class="bi bi-people"></i>
+            </div>
+            <h3 class="card-title">Community</h3>
+            <p class="card-text">It's a community of noob coders who are always there to help each other</p>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="card bg-primary text-light text-center p-5">
+            <div class="h1 mb3">
+              <i class="bi bi-pen"></i>
+            </div>
+            <h3 class="card-title">Write Posts</h3>
+            <p class="card-text">Post about your doubts, your learnings or any useful resources you come across</p>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="card bg-dark text-light text-center p-5">
+            <div class="h1 mb3">
+              <i class="bi bi-image"></i>
+            </div>
+            <h3 class="card-title">Project Gallery</h3>
+            <p class="card-text">Showcase your projects to others and get helpful feedbacks</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

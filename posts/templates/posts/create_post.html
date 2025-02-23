@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Posts🪽
+{% endblock %}
+
+{% block content %}
+  <section class="p-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          {% if post %}
+            <h2>Update post✍️</h2>
+          {% else %}
+            <h2>Create post✍️</h2>
+          {% endif %}
+          <form class="mt-4"
+            action="{% if post %}
+              {% url 'posts:update-post' post.id %}
+            {% else %}
+              {% url 'posts:create-post' %}
+            {% endif %}"
+            method="post">
+            {% csrf_token %}
+            {{ form.media }}
+            <div class="mb-3">{{ form.title.label_tag }}
+              {{ form.title }}</div>
+
+            <div class="mb-3">{{ form.body.label_tag }}
+              {{ form.body }}</div>
+
+            <div class="mb-3">{{ form.topic.label_tag }}
+              {{ form.topic }}</div>
+            <div class="mb-3">{{ form.post_type.label_tag }}
+              {{ form.post_type }}</div>
+            <button class="btn btn-primary">
+              {% if post %}
+                Update Post
+              {% else %}
+                Create Post
+              {% endif %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

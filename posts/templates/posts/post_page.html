@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  Post page🪽
+{% endblock %}
+
+{% block content %}
+  <section class="p-5">
+    <div class="container">
+      <div class="row gap-5">
+        <div class="col-md-8">
+          <article class="mb-5">
+            <h1>{{ post.title }}</h1>
+            <p class="text-body-secondary">posted on {{ post.created_at }} by {{ post.author }}</p>
+            <p class="fs-5">{{ post.body|safe }}</p>
+            <!-- like button -->
+            <div class="my-4">
+              <button id="like-btn-{{ post.id }}" onclick="toggleLike({{ post.id }})" class="btn p-0 border-0 bg-transparent">
+                {% if request.user in post.likes.all %}
+                  <i class="bi bi-heart-fill text-danger h4"></i>
+                {% else %}
+                  <i class="bi bi-heart text-secondary h4"></i>
+                {% endif %}
+              </button>
+              <span id="like-count-{{ post.id }}">{{ post.likes.count }}</span>
+            </div>
+          </article>
+          <hr />
+          <article class="mb-5">
+            <h3 class="fs-5 mb-4">Add comment:</h3>
+            <form action="{% url 'posts:post-page' post.id %}" method="post">
+              {% csrf_token %}
+              {{ form.media }}
+              <div class="mb-4">{{ form.text }}</div>
+              <button class="btn btn-primary">Comment</button>
+            </form>
+          </article>
+
+          <article>
+            <h3 class="fs-5 mb-4">Comments:</h3>
+            {% for comment in comments %}
+              <div class="mb-4 card">
+                <div class="card-body">
+                  <h3 class="fs-6 text-body-secondary card-title">~ commented by {{ comment.user }} on {{ comment.created_at }}</h3>
+                  <p class="fs-5 card-text">{{ comment.text|safe }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </article>
+        </div>
+        <div class="col-md-3">
+          <h2 class="mb-4">Similar posts</h2>
+          {% for post in related_posts %}
+            <article class="card mb-4 border-2 bg-dark text-white">
+              <div class="card-body">
+                <h3 class="card-title">{{ post.title }}</h3>
+                <p class="card-subtitle my-3">posted on {{ post.created_at }} by {{ post.author }}</p>
+                <a class="card-link btn btn-primary" href="{% url 'posts:post-page' post.id %}">View post</a>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleLike(postId) {
+      fetch(`/posts/toggle-like/${postId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ post_id: postId })
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          let likeButton = document.getElementById(`like-btn-${postId}`)
+          let likeCount = document.getElementById(`like-count-${postId}`)
+    
+          if (data.liked) {
+            likeButton.innerHTML = '<i class="bi bi-heart-fill text-danger h4"></i>'
+          } else {
+            likeButton.innerHTML = '<i class="bi bi-heart text-secondary h4"></i>'
+          }
+    
+          likeCount.textContent = data.total_likes
+        })
+        .catch((error) => console.error('Error toggling like:', error))
+    }
+  </script>
+{% endblock %}

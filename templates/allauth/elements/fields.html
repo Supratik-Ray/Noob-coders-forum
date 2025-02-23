@@ -1,0 +1,17 @@
+<!-- filepath: /c:/Users/raysu/OneDrive/Desktop/my_blog/my_blog/templates/allauth/elements/fields.html -->
+{% load allauth %}
+{% for field in attrs.form %}
+  {% with input_type=field.field.widget.input_type %}
+    {% element field field=field type=input_type name=field.html_name errors=field.errors %}
+    {% slot label %}{{ field.label }}{% endslot %}
+    {% slot errors %}
+    {% for error in field.errors %}
+      <p class="mb-0">{{ error }}</p>
+    {% endfor %}
+    {% endslot %}
+    {% if field.help_text %}
+      {% slot help_text %}{{ field.help_text }}{% endslot %}
+    {% endif %}
+    {% endelement %}
+  {% endwith %}
+{% endfor %}
